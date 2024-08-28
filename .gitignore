@@ -1,0 +1,12 @@
+CameraWebServer/*
+!CameraWebServer/app_httpd.cpp
+!CameraWebServer/camera_index.h 
+!CameraWebServer/camera_pins.h
+!CameraWebServer/CameraWebServer.ino
+!CameraWebServer/partitions.csv 
+
+__pycache__
+QR images
+test_function.py 
+test_function.pyc
+.vscode
