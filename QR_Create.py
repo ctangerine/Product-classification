@@ -1,8 +1,9 @@
 import qrcode
 import random
+import json
 
-destination = ['North', 'South', 'East', 'West']
-products = ['Apple', 'Banana', 'Orange', 'Grape', 'Watermelon', 'Pineapple', 'Strawberry', 'Mango', 'Peach', 'Kiwi']
+destination = ["North", "South", "East", "West"]
+products = ["Apple", "Banana", "Orange", "Grape", "Watermelon", "Pineapple", "Strawberry", "Mango", "Peach", "Kiwi"]
 packet_number = 10
 
 class QR_Create:
@@ -13,13 +14,13 @@ class QR_Create:
             box_size=10,
             border=4,
         )
-        self.content = ''
+        self.content = ""
 
     def create_qr(self, id):
         self.qr.add_data(self.content)
         self.qr.make(fit=True)
         img = self.qr.make_image(fill_color="black", back_color="white")
-        img.save(f'QR_{id}.png')
+        img.save(f"QR_{id}.png")
         self.qr.clear()
 
 class Goods:
@@ -27,12 +28,12 @@ class Goods:
 
     def __init__(self):
         Goods._id_counter += 1
-        self.destination = ''
-        self.product = ''
+        self.destination = ""
+        self.product = ""
         self.weight = 0
-        self.weight_unit = 'kg'
+        self.weight_unit = "kg"
         self.value = 0
-        self.value_unit = 'USD'
+        self.value_unit = "USD"
         self.id = Goods._id_counter
         self.qr = QR_Create()
 
@@ -50,19 +51,23 @@ class Goods:
 
     def set_content(self):
         json_content = {
-            'ID': self.id,
-            'Destination': self.destination,
-            'Product': self.product,
-            'Weight': f'{self.weight} {self.weight_unit}',
-            'Value': f'{self.value} {self.value_unit}',
+            "ID": self.id,
+            "Destination": self.destination,
+            "Product": self.product,
+            "Weight": self.weight,
+            "Weight_unit": self.weight_unit,
+            "Value": self.value,
+            "Value_unit": self.value_unit,
         }
 
+        json_content = json.dumps(json_content)
         self.qr.content = str(json_content)
+        print (self.qr.content)
 
     def create_qr(self):
         self.qr.create_qr(self.id)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     packet_number = 10
     goods = []
     for i in range(packet_number):
@@ -73,4 +78,4 @@ if __name__ == '__main__':
         goods[i].set_value()
         goods[i].set_content()
         goods[i].create_qr()
-        print(f'Packet {i+1}: {goods[i].qr.content}')
+        print(f"Packet {i+1}: {goods[i].qr.content}")

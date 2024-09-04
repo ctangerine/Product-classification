@@ -1,9 +1,13 @@
+import asyncio
 import base64
+import json
+import time
+from .models import ProductData
 from channels.generic.websocket import AsyncWebsocketConsumer
 from QR_scan.img_process_helper.change_detection import ChangeDetection
 from QR_scan.img_process_helper.QR_reader import QRReader
-import json
-import time
+from QR_scan.models import ProductData
+from asgiref.sync import sync_to_async
 
 class CamWSConsumer(AsyncWebsocketConsumer):
     '''
@@ -138,6 +142,36 @@ class CamWSConsumer(AsyncWebsocketConsumer):
     async def process_continuous_frame(self, bytes_data):
         qr_data = await self.qr_decoder.read_qr_code(bytes_data)
         if qr_data:
-            await self.send(text_data=json.dumps({
-                'message': 'send_discrete_frame'
-            }))
+            try:
+                data = json.loads(qr_data)
+                await asyncio.gather(
+                    self.record_product_data(data),
+                    self.send(text_data=json.dumps({
+                        'message': 'send_discrete_frame'
+                    }))
+                )
+            except json.JSONDecodeError:
+                print("Received invalid JSON from qr code data")
+                print(f"QR data: {qr_data}")
+                return
+            except Exception as e:
+                print(f"Error in processing continuous frame: {e}")
+                return
+
+    async def record_product_data(self, data):
+        try:
+            product = ProductData(
+                product_id=data['ID'],
+                destination=data['Destination'],
+                product=data['Product'],
+                weight=data['Weight'],
+                weight_unit=data['Weight_unit'],
+                value=data['Value'], 
+                value_unit=data['Value_unit'],
+                
+                qr_data = f'Product id: {data["ID"]}, Destination: {data["Destination"]}, product type: {data["Product"]}, weight: {data["Weight"]} {data["Weight_unit"]}, value: {data["Value"]} {data["Value_unit"]}'
+            )
+            await sync_to_async(product.save)()
+        except Exception as e:
+            print(f"Error in adding product data: {e}")
+
