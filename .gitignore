@@ -10,3 +10,14 @@ QR images
 test_function.py 
 test_function.pyc
 .vscode
+
+FIDS30.zip 
+FIDS30
+
+Fruit Sugar Detection.v2i.yolov8/*
+Fruit Sugar Detection.v2i.yolov8 - Copy/*
+Fruit Sugar Detection.v2i.yolov8
+Fruit Sugar Detection.v2i.yolov8 - Copy
+/Fruit Sugar Detection.v2i.yolov8 - Copy/test/images
+*.txt
+*.jpg
