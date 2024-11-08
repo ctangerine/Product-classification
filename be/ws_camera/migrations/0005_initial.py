@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('QR_scan', '0004_delete_productdata'),
+        ('ws_camera', '0004_delete_productdata'),
     ]
 
     operations = [

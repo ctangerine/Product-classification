@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('QR_scan', '0002_productdata_id_alter_productdata_product_id'),
+        ('ws_camera', '0002_productdata_id_alter_productdata_product_id'),
     ]
 
     operations = [

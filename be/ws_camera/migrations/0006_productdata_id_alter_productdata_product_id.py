@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('QR_scan', '0005_initial'),
+        ('ws_camera', '0005_initial'),
     ]
 
     operations = [

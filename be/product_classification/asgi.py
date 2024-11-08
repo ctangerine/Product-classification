@@ -11,14 +11,14 @@ import os
 
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
-import QR_scan.routing
+import ws_camera.routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'product_classification.settings')
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
     "websocket": URLRouter(
-        QR_scan.routing.websocket_urlpatterns
+        ws_camera.routing.websocket_urlpatterns
     ),
 })
 
