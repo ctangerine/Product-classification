@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-pvtno&90)$3^-5hhk^2t&_fwh8cdg^k5+0ytiei3n!jen=z11%
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+# CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Application definition
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'channels',
     'ws_camera',
+    # 'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',
+    "django.middleware.common.CommonMiddleware"
 ]
 
 ROOT_URLCONF = 'product_classification.urls'
